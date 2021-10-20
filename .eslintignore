@@ -1,0 +1,14 @@
+node_modules/**/*.js
+*.json
+dist/**/*.js
+typing/**/*.d.ts
+typings
+git_ignore/**/*
+.DS_Store
+/dist
+/npm-debug.log*
+/yarn-error.log
+/src/.umi
+/src/.umi-production
+/src/.umi-test
+/.env.local
