@@ -22,7 +22,8 @@
     "dayjs": "^1.10.3",
     "inversify": "^5.0.5",
     "inversify-inject-decorators": "3.1.0",
-    "@rabjs/core": "^7.0.0"
+    "@rabjs/core": "^7.0.0",
+    "nanoid": "*"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

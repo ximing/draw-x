@@ -1,13 +1,12 @@
-import 'reflect-metadata';
 import './app.less';
 import React from 'react';
 import { Router } from 'umi';
-import zhCN from 'antd/es/locale/zh_CN';
 import { ConfigProvider, Result, Button } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 
 export function onRouteChange({ location, routes, action }: any) {
   console.log('onRouteChange', routes, action);
-  if (action === 'REPLACE') return;
+  // if (action === 'REPLACE') return;
   // getService<HistoryService>(HistoryService).location = location;
   // getService<HistoryService>(HistoryService).query = qs.parse(location.search);
   // if (location.pathname.startsWith('/team')) {
@@ -22,6 +21,7 @@ class ErrorWrap extends React.Component<any> {
     showError: false,
     msg: '',
   };
+
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error(error);
     console.log(errorInfo);
@@ -55,8 +55,7 @@ export function rootContainer(container: any, { history }: any) {
         <ConfigProvider locale={zhCN}>
           <Router history={history}>
             <div className="content">
-              <div className="container">{container}</div>
-              {/*<Menu />*/}
+              {container}
             </div>
           </Router>
         </ConfigProvider>

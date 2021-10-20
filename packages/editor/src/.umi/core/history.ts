@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { createBrowserHistory, History } from '/Users/ximing/project/mygithub/draw-x/draw-x/node_modules/umi/node_modules/@umijs/runtime';
+import { createBrowserHistory, History } from '/Users/ximing/project/mygithub/draw-x/node_modules/umi/node_modules/@umijs/runtime';
 
 let options = {
   "basename": "/"
