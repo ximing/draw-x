@@ -25,3 +25,4 @@ cjs
 esm
 lib
 build
+.umi/.cache

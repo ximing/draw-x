@@ -1,11 +1,11 @@
 // @ts-nocheck
 import './core/polyfill';
-
+import '@@/core/devScripts';
 import { plugin } from './core/plugin';
 import './core/pluginRegister';
 import { createHistory } from './core/history';
-import { ApplyPluginsType } from '/Users/ximing/project/mygithub/draw-x/node_modules/umi/node_modules/@umijs/runtime';
-import { renderClient } from '/Users/ximing/project/mygithub/draw-x/node_modules/@umijs/renderer-react';
+import { ApplyPluginsType } from '/Users/ximing/project/mygithub/draw-x/draw-x/node_modules/umi/node_modules/@umijs/runtime';
+import { renderClient } from '/Users/ximing/project/mygithub/draw-x/draw-x/node_modules/@umijs/renderer-react';
 import { getRoutes } from './core/routes';
 
 

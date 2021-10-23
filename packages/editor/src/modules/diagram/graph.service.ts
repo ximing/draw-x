@@ -1,10 +1,11 @@
 import { Injectable, Service } from '@rabjs/core';
-import { Graph, Addon, Shape } from '@antv/x6'
+import { Graph, Addon, Shape } from '@antv/x6';
+
+import './shape';
 
 //https://github.com/antvis/x6/blob/master/examples/x6-app-draw/src/pages/Graph/index.ts
 @Injectable()
-class GraphService extends Service{
-
+export class GraphService extends Service {
   // @ts-ignore
   graph: Graph;
 
@@ -13,7 +14,7 @@ class GraphService extends Service{
 
   init() {
     this.graph = new Graph({
-      container: document.getElementById('container')!,
+      container: document.getElementById('draw-x-diagram')!,
       width: 1000,
       height: 800,
       grid: {
@@ -72,10 +73,10 @@ class GraphService extends Service{
               },
             },
             zIndex: 0,
-          })
+          });
         },
         validateConnection({ targetMagnet }) {
-          return !!targetMagnet
+          return !!targetMagnet;
         },
       },
       highlighting: {
@@ -107,12 +108,12 @@ class GraphService extends Service{
         padding: 10,
       },
       clipboard: true,
-    })
-    this.initStencil()
-    this.initShape()
-    this.initEvent()
-    this.initKeyboard()
-    return this.graph
+    });
+    this.initStencil();
+    this.initShape();
+    this.initEvent();
+    this.initKeyboard();
+    return this.graph;
   }
 
   private initStencil() {
@@ -128,21 +129,21 @@ class GraphService extends Service{
         marginY: 20,
       },
       getDropNode(node) {
-        const size = node.size()
-        return node.clone().size(size.width * 3, size.height * 3)
+        const size = node.size();
+        return node.clone().size(size.width * 3, size.height * 3);
       },
-    })
-    const stencilContainer = document.querySelector('#stencil')
+    });
+    const stencilContainer = document.querySelector('#stencil');
     if (stencilContainer) {
-      stencilContainer.appendChild(this.stencil.container)
+      stencilContainer.appendChild(this.stencil.container);
     }
   }
 
   private initShape() {
-    const { graph } = this
+    const { graph } = this;
     const r1 = graph.createNode({
       shape: 'custom-rect',
-    })
+    });
     const r2 = graph.createNode({
       shape: 'custom-rect',
       attrs: {
@@ -151,7 +152,7 @@ class GraphService extends Service{
           ry: 4,
         },
       },
-    })
+    });
     const r3 = graph.createNode({
       shape: 'custom-polygon',
       attrs: {
@@ -159,7 +160,7 @@ class GraphService extends Service{
           refPoints: '0,10 10,0 20,10 10,20',
         },
       },
-    })
+    });
     const r4 = graph.createNode({
       shape: 'custom-polygon',
       attrs: {
@@ -167,105 +168,101 @@ class GraphService extends Service{
           refPoints: '10,0 40,0 30,20 0,20',
         },
       },
-    })
+    });
     const r5 = graph.createNode({
       shape: 'custom-circle',
-    })
-    this.stencil.load([r1, r2, r3, r4, r5])
+    });
+    this.stencil.load([r1, r2, r3, r4, r5]);
   }
 
   private showPorts(ports: NodeListOf<SVGElement>, show: boolean) {
     for (let i = 0, len = ports.length; i < len; i = i + 1) {
-      ports[i].style.visibility = show ? 'visible' : 'hidden'
+      ports[i].style.visibility = show ? 'visible' : 'hidden';
     }
   }
 
   private initEvent() {
-    const { graph } = this
-    const container = document.getElementById('container')!
+    const { graph } = this;
+    const container = document.getElementById('container')!;
 
     graph.on('node:mouseenter', () => {
-      const ports = container.querySelectorAll(
-        '.x6-port-body',
-      ) as NodeListOf<SVGElement>
-      this.showPorts(ports, true)
-    })
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      this.showPorts(ports, true);
+    });
     graph.on('node:mouseleave', () => {
-      const ports = container.querySelectorAll(
-        '.x6-port-body',
-      ) as NodeListOf<SVGElement>
-      this.showPorts(ports, false)
-    })
+      const ports = container.querySelectorAll('.x6-port-body') as NodeListOf<SVGElement>;
+      this.showPorts(ports, false);
+    });
   }
 
   private initKeyboard() {
-    const { graph } = this
+    const { graph } = this;
     // copy cut paste
     graph.bindKey(['meta+c', 'ctrl+c'], () => {
-      const cells = graph.getSelectedCells()
+      const cells = graph.getSelectedCells();
       if (cells.length) {
-        graph.copy(cells)
+        graph.copy(cells);
       }
-      return false
-    })
+      return false;
+    });
     graph.bindKey(['meta+x', 'ctrl+x'], () => {
-      const cells = graph.getSelectedCells()
+      const cells = graph.getSelectedCells();
       if (cells.length) {
-        graph.cut(cells)
+        graph.cut(cells);
       }
-      return false
-    })
+      return false;
+    });
     graph.bindKey(['meta+v', 'ctrl+v'], () => {
       if (!graph.isClipboardEmpty()) {
-        const cells = graph.paste({ offset: 32 })
-        graph.cleanSelection()
-        graph.select(cells)
+        const cells = graph.paste({ offset: 32 });
+        graph.cleanSelection();
+        graph.select(cells);
       }
-      return false
-    })
+      return false;
+    });
 
     //undo redo
     graph.bindKey(['meta+z', 'ctrl+z'], () => {
       if (graph.history.canUndo()) {
-        graph.history.undo()
+        graph.history.undo();
       }
-      return false
-    })
+      return false;
+    });
     graph.bindKey(['meta+shift+z', 'ctrl+shift+z'], () => {
       if (graph.history.canRedo()) {
-        graph.history.redo()
+        graph.history.redo();
       }
-      return false
-    })
+      return false;
+    });
 
     // select all
     graph.bindKey(['meta+a', 'ctrl+a'], () => {
-      const nodes = graph.getNodes()
+      const nodes = graph.getNodes();
       if (nodes) {
-        graph.select(nodes)
+        graph.select(nodes);
       }
-    })
+    });
 
     //delete
     graph.bindKey('backspace', () => {
-      const cells = graph.getSelectedCells()
+      const cells = graph.getSelectedCells();
       if (cells.length) {
-        graph.removeCells(cells)
+        graph.removeCells(cells);
       }
-    })
+    });
 
     // zoom
     graph.bindKey(['ctrl+1', 'meta+1'], () => {
-      const zoom = graph.zoom()
+      const zoom = graph.zoom();
       if (zoom < 1.5) {
-        graph.zoom(0.1)
+        graph.zoom(0.1);
       }
-    })
+    });
     graph.bindKey(['ctrl+2', 'meta+2'], () => {
-      const zoom = graph.zoom()
+      const zoom = graph.zoom();
       if (zoom > 0.5) {
-        graph.zoom(-0.1)
+        graph.zoom(-0.1);
       }
-    })
+    });
   }
 }
